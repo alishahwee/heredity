@@ -121,15 +121,18 @@ def joint_probability(people, one_gene, two_genes, have_trait):
 
     probability: float = 1.0
 
-    for person in people:
-        gene_copies: int = 2 if person in two_genes else 1 if person in one_gene else 0
+    for person_info in people.values():
+        person_name: str = person_info["name"]
+        gene_copies: int = (
+            2 if person_name in two_genes else 1 if person_name in one_gene else 0
+        )
 
         # Factor in trait probability
-        probability *= PROBS["trait"][gene_copies][person in have_trait]
+        probability *= PROBS["trait"][gene_copies][person_name in have_trait]
 
         # Determine gene number probability based on parent info
-        mom: str = person["mother"]
-        dad: str = person["father"]
+        mom: str = person_info["mother"]
+        dad: str = person_info["father"]
         if mom is None and dad is None:
             probability *= PROBS["gene"][gene_copies]
         else:
