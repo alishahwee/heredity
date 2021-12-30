@@ -142,10 +142,10 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 else (0.0 + m)
             )
 
-            from_mom = inheritance_prob(mom)
-            from_dad = inheritance_prob(dad)
-            not_from_mom = 1.0 - from_mom
-            not_from_dad = 1.0 - from_dad
+            from_mom: float = inheritance_prob(mom)
+            from_dad: float = inheritance_prob(dad)
+            not_from_mom: float = 1.0 - from_mom
+            not_from_dad: float = 1.0 - from_dad
 
             # Given from mom OR dad
             if person in one_gene:
