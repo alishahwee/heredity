@@ -151,10 +151,10 @@ def joint_probability(people, one_gene, two_genes, have_trait):
             not_from_dad: float = 1.0 - from_dad
 
             # Given from mom OR dad
-            if person in one_gene:
+            if person_name in one_gene:
                 probability *= not_from_mom * from_dad + from_mom * not_from_dad
             # Given from mom AND dad
-            elif person in two_genes:
+            elif person_name in two_genes:
                 probability *= from_mom * from_dad
             # Not given gene
             else:
@@ -170,7 +170,11 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
     Which value for each distribution is updated depends on whether
     the person is in `have_gene` and `have_trait`, respectively.
     """
-    raise NotImplementedError
+
+    for person in probabilities:
+        gene_copies: int = 2 if person in two_genes else 1 if person in one_gene else 0
+        probabilities[person]["gene"][gene_copies] += p
+        probabilities[person]["trait"][person in have_trait] += p
 
 
 def normalize(probabilities):
